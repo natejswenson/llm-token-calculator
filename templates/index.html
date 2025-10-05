@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate token counts for various LLM models. Support for OpenAI GPT and Anthropic Claude models.">
+    <title>Token Calculator - LLM Token Counter</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span id="themeIcon">🌙</span>
+    </button>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Token Calculator</h1>
+            <p>Calculate tokens for any LLM model</p>
+        </header>
+
+        <!-- Main Card -->
+        <main class="card">
+            <!-- Error Message -->
+            <div id="errorMessage" class="error-message hidden" role="alert"></div>
+
+            <!-- Input Section -->
+            <section class="input-section">
+                <label for="textInput" class="input-label">Text Input</label>
+                <textarea
+                    id="textInput"
+                    class="text-input"
+                    placeholder="Enter your text here or upload a file..."
+                    aria-label="Text input for token calculation"
+                ></textarea>
+
+                <!-- File Upload & Character Counter -->
+                <div class="file-upload-section">
+                    <label class="file-upload-btn">
+                        <span>📁 Upload File</span>
+                        <input
+                            type="file"
+                            id="fileInput"
+                            accept=".txt,.md,.markdown"
+                            hidden
+                            aria-label="Upload text or markdown file"
+                        >
+                    </label>
+                    <span class="char-counter" id="charCounter">0 characters</span>
+                </div>
+            </section>
+
+            <!-- Settings Panel -->
+            <section class="settings-panel">
+                <div class="setting-group">
+                    <label for="modelSelect" class="input-label">Model</label>
+                    <select id="modelSelect" class="select-input" aria-label="Select LLM model">
+                        <optgroup label="OpenAI">
+                            <option value="gpt-4" selected>GPT-4</option>
+                            <option value="gpt-4-turbo">GPT-4 Turbo</option>
+                            <option value="gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                            <option value="text-embedding-ada-002">Ada Embedding</option>
+                        </optgroup>
+                        <optgroup label="Anthropic">
+                            <option value="claude-3-opus">Claude 3 Opus</option>
+                            <option value="claude-3-sonnet">Claude 3 Sonnet</option>
+                            <option value="claude-3-haiku">Claude 3 Haiku</option>
+                            <option value="claude-2">Claude 2</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <div class="setting-group">
+                    <label class="input-label">Options</label>
+                    <div class="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="preprocessMarkdown"
+                            class="checkbox-input"
+                            checked
+                            aria-label="Preprocess markdown"
+                        >
+                        <label for="preprocessMarkdown">Preprocess Markdown</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button id="calculateBtn" class="btn btn-primary" aria-label="Calculate tokens">
+                    <span id="calculateBtnText">Calculate</span>
+                </button>
+                <button id="clearBtn" class="btn btn-secondary" aria-label="Clear input">
+                    Clear
+                </button>
+            </div>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section hidden" role="region" aria-label="Calculation results">
+                <h2 class="results-header">Results</h2>
+
+                <!-- Token Display -->
+                <div class="token-display">
+                    <div class="token-count" id="tokenCount">0</div>
+                    <div class="token-label">tokens</div>
+                </div>
+
+                <!-- Results Grid -->
+                <div class="results-grid">
+                    <div class="result-item">
+                        <div class="result-label">Model</div>
+                        <div class="result-value" id="modelUsed">-</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">Characters</div>
+                        <div class="result-value" id="charCount">-</div>
+                    </div>
+                </div>
+
+                <!-- Copy Button -->
+                <button id="copyBtn" class="copy-btn" aria-label="Copy results to clipboard">
+                    📋 Copy Results
+                </button>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="success-message hidden" role="status"></div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                Built with ❤️ using Python Flask & Vanilla JS
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
